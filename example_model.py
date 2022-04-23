@@ -63,6 +63,7 @@ live_data = pd.read_parquet(f'v4/live_{current_round}.parquet',
 # training_data = training_data[training_data[ERA_COL].isin(every_4th_era)]
 
 # getting the per era correlation of each feature vs the target
+print('Calculating feature correlations')
 all_feature_corrs = training_data.groupby(ERA_COL).apply(
     lambda era: era[features].corrwith(era[TARGET_COL])
 )
@@ -71,6 +72,7 @@ all_feature_corrs = training_data.groupby(ERA_COL).apply(
 # the target in each half of training data; we'll use these later
 riskiest_features = get_biggest_change_features(all_feature_corrs, 50)
 
+print('Running garbage collection')
 # "garbage collection" (gc) gets rid of unused data and frees up memory
 gc.collect()
 
