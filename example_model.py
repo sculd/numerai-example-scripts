@@ -47,10 +47,13 @@ read_columns = features + [ERA_COL, DATA_TYPE_COL, TARGET_COL]
 
 # note: sometimes when trying to read the downloaded data you get an error about invalid magic parquet bytes...
 # if so, delete the file and rerun the napi.download_dataset to fix the corrupted file
+print('Reading trading data')
 training_data = pd.read_parquet('v4/train.parquet',
                                 columns=read_columns)
+print('Reading validation data')
 validation_data = pd.read_parquet('v4/validation.parquet',
                                   columns=read_columns)
+print('Reading live data')
 live_data = pd.read_parquet(f'v4/live_{current_round}.parquet',
                                   columns=read_columns)
 
@@ -80,7 +83,8 @@ if not model:
               "learning_rate": 0.01,
               "max_depth": 5,
               "num_leaves": 2 ** 5,
-              "colsample_bytree": 0.1}
+              "colsample_bytree": 0.1,
+              "device": "gpu"}
 
     model = LGBMRegressor(**params)
 
