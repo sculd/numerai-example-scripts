@@ -25,7 +25,8 @@ model_params = {"n_estimators": 2000,
                 "learning_rate": 0.01,
                 "max_depth": 5,
                 "num_leaves": 2 ** 5,
-                "colsample_bytree": 0.1}
+                "colsample_bytree": 0.1,
+                "device": "gpu"}
 
 # the amount of downsampling we'll use to speed up cross validation and full train.
 # a value of 1 means no downsampling
