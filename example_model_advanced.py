@@ -197,8 +197,10 @@ else:
 """ Things that we always do even if we've already trained """
 gc.collect()
 
+current_round = napi.get_current_round()
+
 print("reading tournament_data")
-live_data = pd.read_parquet('v4/live.parquet')
+live_data = pd.read_parquet(f'v4/live_{current_round}.parquet')
 print("reading validation_data")
 validation_data = pd.read_parquet('v4/validation.parquet')
 print("reading example_predictions")
