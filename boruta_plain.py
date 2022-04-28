@@ -35,7 +35,7 @@ X, y = df.filter(like='feature_', axis='columns'), df[TARGET_COL]
 from sklearn.ensemble import RandomForestRegressor
 
 # define random forest classifier
-forest = RandomForestRegressor(n_jobs=-1, class_weight='balanced', max_depth=5)
+forest = RandomForestRegressor(max_depth=5, random_state=0)
 forest.fit(X, y)
 
 
