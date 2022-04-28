@@ -25,10 +25,11 @@ feat_selector = BorutaPy(forest, n_estimators='auto', verbose=2, random_state=1)
 feat_selector.fit(X, y)
 
 # check selected features
-feat_selector.support_
+rint(feat_selector.support_)
 
 # check ranking of features
-feat_selector.ranking_
+print(feat_selector.ranking_)
 
 # call transform() on X to filter it down to selected features
 X_filtered = feat_selector.transform(X)
+

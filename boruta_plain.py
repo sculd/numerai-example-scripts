@@ -15,7 +15,6 @@ from utils import (
 import sklearn
 import lightgbm
 import json
-from BorutaShap import BorutaShap
 
 napi = NumerAPI()
 
@@ -31,14 +30,29 @@ df["erano"] = df.era.astype(int)
 eras = df.erano
 X, y = df.filter(like='feature_', axis='columns'), df[TARGET_COL]
 
-# here I iterate over the 4 non-overlapping sets of eras and perform feature selection in each, then take the union of the selected features
-# I'm just using standard 'target' for now, but it would be interesting to investigate other targets as well
-# It may also be useful to look at the borderline features that aren't accepted or eliminated
-good_features = []
-df_tmp = df
-eras_tmp = eras
-Feature_Selector.fit(X=df_tmp.filter(like='feature', axis='columns'), y=df_tmp[TARGET_COL], n_trials=5, sample=False, train_or_test = 'test', normalize=True, verbose=True)
-good_features+=Feature_Selector.accepted
-good_features = list(set(good_features))
 
-print(good_features)
+
+from sklearn.ensemble import RandomForestClassifier
+
+# define random forest classifier
+forest = RandomForestClassifier(n_jobs=-1, class_weight='balanced', max_depth=5)
+forest.fit(X, y)
+
+
+from boruta import BorutaPy
+
+# define Boruta feature selection method
+feat_selector = BorutaPy(forest, n_estimators='auto', verbose=2, random_state=1)
+
+# find all relevant features
+feat_selector.fit(X, y)
+
+# check selected features
+rint(feat_selector.support_)
+
+# check ranking of features
+print(feat_selector.ranking_)
+
+# call transform() on X to filter it down to selected features
+X_filtered = feat_selector.transform(X)
+
