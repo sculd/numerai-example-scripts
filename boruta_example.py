@@ -25,7 +25,7 @@ feat_selector = BorutaPy(forest, n_estimators='auto', verbose=2, random_state=1)
 feat_selector.fit(X, y)
 
 # check selected features
-rint(feat_selector.support_)
+print(feat_selector.support_)
 
 # check ranking of features
 print(feat_selector.ranking_)
