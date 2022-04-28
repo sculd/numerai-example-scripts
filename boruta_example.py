@@ -8,10 +8,10 @@ data = load_breast_cancer()
 
 
 
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestClassifier
 
 # define random forest classifier
-forest = RandomForestRegressor(n_jobs=-1, class_weight='balanced', max_depth=5)
+forest = RandomForestClassifier(n_jobs=-1, class_weight='balanced', max_depth=5)
 forest.fit(X, y)
 
 
