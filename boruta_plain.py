@@ -34,6 +34,7 @@ X, y = df.filter(like='feature_', axis='columns'), df[TARGET_COL]
 
 from sklearn.ensemble import RandomForestRegressor
 
+print('training the model')
 # define random forest classifier
 forest = RandomForestRegressor(max_depth=5, random_state=0)
 forest.fit(X, y)
@@ -44,14 +45,17 @@ from boruta import BorutaPy
 # define Boruta feature selection method
 feat_selector = BorutaPy(forest, n_estimators='auto', verbose=2, random_state=1)
 
+print('selecting features')
 # find all relevant features
 feat_selector.fit(X, y)
 
 # check selected features
-rint(feat_selector.support_)
+print(feat_selector.support_)
 
 # check ranking of features
 print(feat_selector.ranking_)
+
+print('Selected vs. total: {s} vs. {t}'.format(s=np.sum(feat_selector.support_), t=X.shape[1]))
 
 # call transform() on X to filter it down to selected features
 X_filtered = feat_selector.transform(X)
